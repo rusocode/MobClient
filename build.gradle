@@ -1,13 +1,13 @@
 buildscript {
     repositories {
+        mavenLocal()
         mavenCentral()
-        maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
         jcenter()
     }
     dependencies {
         classpath 'de.richsource.gradle.plugins:gwt-gradle-plugin:0.6'
-        classpath 'com.android.tools.build:gradle:1.2.3'
-        classpath 'org.robovm:robovm-gradle-plugin:1.5.1-SNAPSHOT'
+        // classpath 'com.android.tools.build:gradle:1.2.3'
+        // classpath 'org.robovm:robovm-gradle-plugin:1.5.1-SNAPSHOT'
 
         // lib for artemis-odb weaving.
         // see https://github.com/junkdog/artemis-odb/wiki/Bytecode-weaving
@@ -41,16 +41,16 @@ project(":desktop") {
     apply plugin: "java"
 
     dependencies {
-        compile project(":core")
-        compile "com.badlogicgames.gdx:gdx-backend-lwjgl:$gdxVersion"
-        compile "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"
-        compile "com.badlogicgames.gdx:gdx-box2d-platform:$gdxVersion:natives-desktop"
-        compile "com.badlogicgames.gdx:gdx-freetype-platform:$gdxVersion:natives-desktop"
+        implementation project(":core")
+        implementation "com.badlogicgames.gdx:gdx-backend-lwjgl:$gdxVersion"
+        implementation "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"
+        implementation "com.badlogicgames.gdx:gdx-box2d-platform:$gdxVersion:natives-desktop"
+        implementation "com.badlogicgames.gdx:gdx-freetype-platform:$gdxVersion:natives-desktop"
 //        compile "com.badlogicgames.gdx:gdx-tools:$gdxVersion"
     }
 }
 
-project(":android") {
+/* project(":android") {
     apply plugin: "android"
 
     configurations { natives }
@@ -78,9 +78,9 @@ project(":android") {
         natives "com.badlogicgames.gdx:gdx-freetype-platform:$gdxVersion:natives-x86"
         compile "com.badlogicgames.box2dlights:box2dlights:$box2DLightsVersion"
     }
-}
+} */
 
-project(":ios") {
+/* project(":ios") {
     apply plugin: "java"
     apply plugin: "robovm"
 
@@ -95,9 +95,9 @@ project(":ios") {
         natives "com.badlogicgames.gdx:gdx-box2d-platform:$gdxVersion:natives-ios"
         natives "com.badlogicgames.gdx:gdx-freetype-platform:$gdxVersion:natives-ios"
     }
-}
+} */
 
-project(":html") {
+/* project(":html") {
     apply plugin: "gwt"
     apply plugin: "war"
 
@@ -122,8 +122,13 @@ project(":html") {
         compile "net.mostlyoriginal.artemis-odb:contrib-jam:$artemisContribVersion:sources"
         compile "net.mostlyoriginal.artemis-odb:contrib-eventbus:$artemisContribVersion:sources"
     }
-}
+} */
 
+// Posible solucion al error:
+/* Cannot cast object '[configuration ':core:provided']' with class 'java.util.ArrayList' to class 'org.gradle.api.file.FileCollection' 
+ * due to: groovy.lang.GroovyRuntimeException: Could not find matching constructor for: org.gradle.api.file.FileCollection(org.gradle.
+ * api.internal.artifacts.configurations.DefaultConfiguration_Decorated) */
+// https://stackoverflow.com/questions/30731084/provided-dependency-in-gradle
 project(":core") {
     apply plugin: "java"
 
@@ -133,32 +138,32 @@ project(":core") {
 
     sourceSets {
         // run the annotation processor compile time.
-        main { compileClasspath += [configurations.provided] }
+        main { compileClasspath += /* [ */ configurations.provided /* ] */ }
         test.java.srcDirs = ["tests/"]
     }
 
     dependencies {
-        compile "com.badlogicgames.gdx:gdx:$gdxVersion"
-        compile "com.badlogicgames.gdx:gdx-box2d:$gdxVersion"
-        compile "com.badlogicgames.gdx:gdx-freetype:$gdxVersion"
-        compile "com.badlogicgames.gdx:gdx-backend-headless:$gdxVersion"
-        compile "com.badlogicgames.box2dlights:box2dlights:$box2DLightsVersion"
-        compile "com.badlogicgames.gdx:gdx-ai:$aiVersion"
-        compile "com.underwaterapps.overlap2druntime:overlap2d-runtime-libgdx:0.0.8"
+        implementation "com.badlogicgames.gdx:gdx:$gdxVersion"
+        implementation "com.badlogicgames.gdx:gdx-box2d:$gdxVersion"
+        implementation "com.badlogicgames.gdx:gdx-freetype:$gdxVersion"
+        implementation "com.badlogicgames.gdx:gdx-backend-headless:$gdxVersion"
+        implementation "com.badlogicgames.box2dlights:box2dlights:$box2DLightsVersion"
+        implementation "com.badlogicgames.gdx:gdx-ai:$aiVersion"
+        implementation "com.underwaterapps.overlap2druntime:overlap2d-runtime-libgdx:0.0.8"
 
-        compile "net.onedaybeard.artemis:artemis-odb:$artemisVersion"
+        implementation "net.onedaybeard.artemis:artemis-odb:$artemisVersion"
         provided "net.onedaybeard.artemis:artemis-odb-processor:$artemisVersion"
-        compile "net.mostlyoriginal.artemis-odb:contrib-core:$artemisContribVersion"
-        compile "net.mostlyoriginal.artemis-odb:contrib-jam:$artemisContribVersion"
-        compile "net.mostlyoriginal.artemis-odb:contrib-eventbus:$artemisContribVersion"
+        implementation "net.mostlyoriginal.artemis-odb:contrib-core:$artemisContribVersion"
+        implementation "net.mostlyoriginal.artemis-odb:contrib-jam:$artemisContribVersion"
+        implementation "net.mostlyoriginal.artemis-odb:contrib-eventbus:$artemisContribVersion"
 
-        compile 'junit:junit:4.+'
-        testCompile 'junit:junit:4.+'
-        testCompile "com.badlogicgames.gdx:gdx-backend-headless:$gdxVersion"
-        testCompile "com.badlogicgames.gdx:gdx:$gdxVersion"
-        testCompile "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"
-        testCompile "com.badlogicgames.gdx:gdx-box2d:$gdxVersion"
-        testCompile "com.badlogicgames.gdx:gdx-box2d-platform:$gdxVersion:natives-desktop"
+        implementation 'junit:junit:4.+'
+        testImplementation 'junit:junit:4.+'
+        testImplementation "com.badlogicgames.gdx:gdx-backend-headless:$gdxVersion"
+        testImplementation "com.badlogicgames.gdx:gdx:$gdxVersion"
+        testImplementation "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"
+        testImplementation "com.badlogicgames.gdx:gdx-box2d:$gdxVersion"
+        testImplementation "com.badlogicgames.gdx:gdx-box2d-platform:$gdxVersion:natives-desktop"
     }
 }
 
@@ -166,8 +171,8 @@ project(":matrix") {
     apply plugin: "java"
 
     dependencies {
-        compile project(":core")
-        compile "net.onedaybeard.ecs:matrix-cli:0.1.1"
+        implementation project(":core")
+        implementation "net.onedaybeard.ecs:matrix-cli:0.1.1"
     }
 
     task generateMatrix(type: JavaExec) {
