@@ -133,6 +133,8 @@ project(":android") {
 project(":core") {
     apply plugin: "java"
 
+    sourceSets.main.resources.srcDirs = [ "../core/assets" ]
+
     configurations {
         provided
     }
