@@ -23,7 +23,7 @@ allprojects {
     ext {
         appName = 'MobClient'
         gdxVersion = '1.6.4'
-        roboVMVersion = '1.5.0'
+        // roboVMVersion = '1.5.0'
         box2DLightsVersion = '1.3'
         aiVersion = '1.5.0'
         artemisVersion = '0.11.4'
@@ -50,11 +50,6 @@ project(":desktop") {
     }
 }
 
-// Posible solucion al error:
-/* Cannot cast object '[configuration ':core:provided']' with class 'java.util.ArrayList' to class 'org.gradle.api.file.FileCollection' 
- * due to: groovy.lang.GroovyRuntimeException: Could not find matching constructor for: org.gradle.api.file.FileCollection(org.gradle.
- * api.internal.artifacts.configurations.DefaultConfiguration_Decorated) */
-// https://stackoverflow.com/questions/30731084/provided-dependency-in-gradle
 project(":core") {
     apply plugin: "java"
 
