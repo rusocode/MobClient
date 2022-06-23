@@ -50,7 +50,8 @@ project(":desktop") {
     }
 }
 
-/* project(":android") {
+/*
+project(":android") {
     apply plugin: "android"
 
     configurations { natives }
@@ -178,7 +179,7 @@ project(":matrix") {
     task generateMatrix(type: JavaExec) {
         classpath = sourceSets.main.runtimeClasspath
         main = 'com.artemis.cli.CliApplication'
-        args '-c', "$rootProject.projectDir/core/build/classes/main/", '-l', "$rootProject.ext.appName"
+        args '-c', "$rootProject.projectDir/core/build/classes/java/", '-l', "$rootProject.ext.appName"
     }
     build.finalizedBy generateMatrix
 }

@@ -28,7 +28,7 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 
-import javafx.scene.effect.Reflection;
+// import javafx.scene.effect.Reflection;
 
 public class ScreenHandler {
 
