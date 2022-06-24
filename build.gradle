@@ -1,23 +1,38 @@
 buildscript {
+
     repositories {
         mavenLocal()
         mavenCentral()
         jcenter()
     }
+
     dependencies {
         classpath 'de.richsource.gradle.plugins:gwt-gradle-plugin:0.6'
-        // classpath 'com.android.tools.build:gradle:1.2.3'
-        // classpath 'org.robovm:robovm-gradle-plugin:1.5.1-SNAPSHOT'
-
         // lib for artemis-odb weaving.
         // see https://github.com/junkdog/artemis-odb/wiki/Bytecode-weaving
         classpath 'net.onedaybeard.artemis:artemis-odb-gradle-plugin:0.11.4'
+        classpath 'org.openjfx:javafx-plugin:0.0.13'
     }
+
+}
+
+plugins {
+    id 'org.openjfx.javafxplugin' version '0.0.13'
 }
 
 allprojects {
     apply plugin: "eclipse"
     apply plugin: "idea"
+
+    // Otra forma de agregar el plugin de JavaFX especificando la version
+    // apply plugin: "org.openjfx.javafxplugin" version "0.0.13"
+
+    // https://github.com/openjfx/javafx-gradle-plugin
+    javafx {
+        version = '18' // Anula la version predeterminada de JavaFX usando la 18
+        modules = [ 'javafx.graphics' ] // Especifica el modulo
+        // configuration = 'compileOnly'
+    }
 
     version = '1.0'
     ext {
