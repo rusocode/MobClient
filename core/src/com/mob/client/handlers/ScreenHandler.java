@@ -32,66 +32,73 @@ import java.util.HashMap;
 
 public class ScreenHandler {
 
-    protected static HashMap<String, Screen> screens = new HashMap<String, Screen>();
-    protected static Screen currentScreen;
-    private static Game game;
+	protected static HashMap<String, Screen> screens = new HashMap<String, Screen>();
+	protected static Screen currentScreen;
+	private static Game game;
 
-    public static Screen load(String screenClassName) {
+	public static Screen load(String screenClassName) {
 
-        screenClassName = "com.mob.client.screens." + screenClassName;
-        Screen newScreen = null;
+		screenClassName = "com.mob.client.screens." + screenClassName;
+		// screenClassName = com.mob.client.screens.GameScreen
+		Screen newScreen = null;
 
-        if(!screens.containsKey(screenClassName)) {
-            try {
-                Class<?> screenClass =  ClassReflection.forName(screenClassName);
-                Constructor<?> constructor = screenClass.getConstructor(Game.class);
-                newScreen = (Screen) constructor.newInstance(game);
-                screens.put(screenClassName, newScreen);
-            } catch ( InvocationTargetException ex ) {
-                System.err.println(ex.getMessage() + " Exception in Screen.");
-                ex.printStackTrace();
-            } catch ( ReflectionException ex ) {
-                System.err.println(ex.getMessage() + " Exception in Screen.");
-                ex.printStackTrace();
-            } catch ( NoSuchMethodException ex ){
-            } catch( InstantiationException ex ){
-                System.err.println( ex + " Screen Must be a concrete class.");
-                ex.printStackTrace();
-            } catch( IllegalAccessException ex ){
-                System.err.println( ex + " Screen with Wrong number of args.");
-                ex.printStackTrace();
-            }
-        } else {
-            newScreen = screens.get(screenClassName);
-        }
+		if (!screens.containsKey(screenClassName)) {
+			try {
+				Class<?> screenClass = ClassReflection.forName(screenClassName);
+				Constructor<?> constructor = screenClass.getConstructor(Game.class);
 
-        if(currentScreen != null) {
-            currentScreen.dispose();
-        }
+				// constructor = public com.mob.client.screens.GameScreen(com.mob.client.Game)
+				// System.out.println(constructor != null);
+				System.out.println(game != null);
 
-        currentScreen = newScreen;
-        return currentScreen;
-    }
+				newScreen = (Screen) constructor.newInstance(game);
 
-    /**
-     * @param currentScreen the currentScreen to set
-     */
-    public static void setCurrent(Screen currentScreen) {
-        currentScreen = currentScreen;
-    }
+				screens.put(screenClassName, newScreen);
+			} catch (InvocationTargetException ex) {
+				System.err.println(ex.getMessage() + " Exception in Screen.");
+				ex.printStackTrace();
+			} catch (ReflectionException ex) {
+				System.err.println(ex.getMessage() + " Exception in Screen.");
+				ex.printStackTrace();
+			} catch (NoSuchMethodException ex) {
+			} catch (InstantiationException ex) {
+				System.err.println(ex + " Screen Must be a concrete class.");
+				ex.printStackTrace();
+			} catch (IllegalAccessException ex) {
+				System.err.println(ex + " Screen with Wrong number of args.");
+				ex.printStackTrace();
+			}
+		} else {
+			newScreen = screens.get(screenClassName);
+		}
 
-    /**
-     * @return the currentScreen
-     */
-    public static Screen getCurrent() {
-        return ScreenHandler.currentScreen;
-    }
+		if (currentScreen != null) {
+			currentScreen.dispose();
+		}
 
-    public static Game getGameInstance() {
-        return game;
-    }
+		currentScreen = newScreen;
+		return currentScreen;
+	}
 
-    public static void setGameInstance(Game game) {
-        ScreenHandler.game = game;
-    }
+	/**
+	 * @param currentScreen the currentScreen to set
+	 */
+	public static void setCurrent(Screen currentScreen) {
+		currentScreen = currentScreen;
+	}
+
+	/**
+	 * @return the currentScreen
+	 */
+	public static Screen getCurrent() {
+		return ScreenHandler.currentScreen;
+	}
+
+	public static Game getGameInstance() {
+		return game;
+	}
+
+	public static void setGameInstance(Game game) {
+		ScreenHandler.game = game;
+	}
 }
