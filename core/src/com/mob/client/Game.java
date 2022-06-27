@@ -35,7 +35,11 @@ public class Game implements ApplicationListener {
 
         // Set ScreenHandler Game instance to this and load GameScreen
         ScreenHandler.setGameInstance(this);
-        ScreenHandler.load("GameScreen");
+        try {
+            ScreenHandler.load("GameScreen");
+        } catch (Throwable e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override

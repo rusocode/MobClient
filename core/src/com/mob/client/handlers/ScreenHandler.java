@@ -36,27 +36,28 @@ public class ScreenHandler {
 	protected static Screen currentScreen;
 	private static Game game;
 
-	public static Screen load(String screenClassName) {
+	public static Screen load(String screenClassName) throws Throwable {
 
-		screenClassName = "com.mob.client.screens." + screenClassName;
-		// screenClassName = com.mob.client.screens.GameScreen
+		screenClassName = "com.mob.client.screens." + screenClassName; // screenClassName = com.mob.client.screens.GameScreen
 		Screen newScreen = null;
 
 		if (!screens.containsKey(screenClassName)) {
 			try {
+				/* Ahora a partir del objeto Class puedo obtener las caracteristicas del objeto GameScreen, ya que estan
+				 * asociados. */
 				Class<?> screenClass = ClassReflection.forName(screenClassName);
-				Constructor<?> constructor = screenClass.getConstructor(Game.class);
+				Constructor<?> constructor = screenClass.getConstructor(Game.class); // constructor = public com.mob.client.screens.GameScreen(com.mob.client.Game)
 
-				// constructor = public com.mob.client.screens.GameScreen(com.mob.client.Game)
-				// System.out.println(constructor != null);
-				System.out.println(game != null);
-
+				// Que causa InvocationTargetException?
+				// https://stackoverflow.com/questions/6020719/what-could-cause-java-lang-reflect-invocationtargetexception
 				newScreen = (Screen) constructor.newInstance(game);
+				newScreen.print();
 
 				screens.put(screenClassName, newScreen);
-			} catch (InvocationTargetException ex) {
-				System.err.println(ex.getMessage() + " Exception in Screen.");
-				ex.printStackTrace();
+			} catch (InvocationTargetException e) {
+				throw e.getCause();
+				// System.err.println(e.getMessage() + " Exception in Screen.");
+				// e.printStackTrace();
 			} catch (ReflectionException ex) {
 				System.err.println(ex.getMessage() + " Exception in Screen.");
 				ex.printStackTrace();

@@ -26,80 +26,91 @@ import net.mostlyoriginal.api.utils.builder.WorldConfigurationBuilder;
 
 public abstract class Screen extends ScreenAdapter {
 
-    public static final int GAME_RUNNING = 0;
-    public static final int GAME_PAUSED = 1;
+	public static final int GAME_RUNNING = 0;
+	public static final int GAME_PAUSED = 1;
 
-    protected Game game;
-    protected World world;
-    protected FPSLogger logger;
-    protected final WorldConfigurationBuilder builder = new WorldConfigurationBuilder();
+	protected Game game;
+	protected World world;
+	protected FPSLogger logger;
+	protected final WorldConfigurationBuilder builder = new WorldConfigurationBuilder();
 
-    protected int state;
+	protected int state;
 
-    /**
-     * Screen constructor, calls abstract methods for scene
-     * initialization using a WorldConfigurationBuilder
-     *
-     * @param game
-     */
+	/**
+	 * Screen constructor, calls abstract methods for scene
+	 * initialization using a WorldConfigurationBuilder
+	 *
+	 * @param game
+	 */
 	public Screen(Game game) {
 		this.game = game;
-        this.logger = new FPSLogger();
+		this.logger = new FPSLogger();
 
-        this.initSystems(builder);
-        this.initScene();
+		this.initSystems(builder);
+		this.initScene();
 
-        this.world = new World(builder.build());
-        this.state = GAME_RUNNING;
+		this.world = new World(builder.build());
+		this.state = GAME_RUNNING;
 	}
 
-    @Override
-    public void render (float delta) {
-        this.update(delta);
+	@Override
+	public void render(float delta) {
+		this.update(delta);
 //		this.drawUI();
-    }
+	}
 
-    @Override
-    public void pause () {
-        if (this.state == GAME_RUNNING) {
-            this.state = GAME_PAUSED;
-            this.pauseSystems();
-        }
-    }
-    @Override
-    public void resume() {
-        if(this.state == GAME_PAUSED) {
-            this.state = GAME_RUNNING;
-            this.resumeSystems();
-        }
-    }
+	@Override
+	public void pause() {
+		if (this.state == GAME_RUNNING) {
+			this.state = GAME_PAUSED;
+			this.pauseSystems();
+		}
+	}
 
-    @Override
-    public void dispose() {
-        super.dispose();
-    }
+	@Override
+	public void resume() {
+		if (this.state == GAME_PAUSED) {
+			this.state = GAME_RUNNING;
+			this.resumeSystems();
+		}
+	}
 
-    abstract protected void initSystems(WorldConfigurationBuilder builder);
-    abstract protected void initScene();
-    abstract protected void resumeSystems();
-    abstract protected void pauseSystems();
-    abstract protected void updatePaused();
-    abstract protected void updateRunning(float deltaTime);
-    abstract protected void update(float deltaTime);
+	@Override
+	public void dispose() {
+		super.dispose();
+	}
 
-    public Game getGame() {
-        return game;
-    }
+	abstract protected void initSystems(WorldConfigurationBuilder builder);
 
-    public void setGame(Game game) {
-        this.game = game;
-    }
+	abstract protected void initScene();
 
-    public int getState() {
-        return state;
-    }
+	abstract protected void resumeSystems();
 
-    public void setState(int state) {
-        this.state = state;
-    }
+	abstract protected void pauseSystems();
+
+	abstract protected void updatePaused();
+
+	abstract protected void updateRunning(float deltaTime);
+
+	abstract protected void update(float deltaTime);
+
+	public Game getGame() {
+		return game;
+	}
+
+	public void setGame(Game game) {
+		this.game = game;
+	}
+
+	public int getState() {
+		return state;
+	}
+
+	public void setState(int state) {
+		this.state = state;
+	}
+
+	public void print() {
+		System.out.println("Metodo de la clase Screen!");
+	}
 }
