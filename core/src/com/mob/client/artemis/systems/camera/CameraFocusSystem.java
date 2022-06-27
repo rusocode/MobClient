@@ -27,7 +27,10 @@ public class CameraFocusSystem extends EntityProcessingSystem {
 
     @Override
     protected void process(Entity e) {
-        Entity camera = world.getManager(TagManager.class).getEntity("camera");
+
+        Entity camera = world.getEntity(Integer.parseInt("camera"));
+
+        // Entity camera = world.getManager(TagManager.class).getEntity("camera");
         Pos cameraPos = camera.getComponent(Pos.class);
 
         cameraPos.x = pm.get(e).x;

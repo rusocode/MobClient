@@ -11,14 +11,14 @@ buildscript {
         // lib for artemis-odb weaving.
         // see https://github.com/junkdog/artemis-odb/wiki/Bytecode-weaving
         classpath 'net.onedaybeard.artemis:artemis-odb-gradle-plugin:0.11.4'
-        classpath 'org.openjfx:javafx-plugin:0.0.13'
+        // classpath 'org.openjfx:javafx-plugin:0.0.13'
     }
 
 }
 
-plugins {
+/* plugins {
     id 'org.openjfx.javafxplugin' version '0.0.13'
-}
+} */
 
 allprojects {
     apply plugin: "eclipse"
@@ -28,11 +28,11 @@ allprojects {
     // apply plugin: "org.openjfx.javafxplugin" version "0.0.13"
 
     // https://github.com/openjfx/javafx-gradle-plugin
-    javafx {
+    /* javafx {
         version = '18' // Anula la version predeterminada de JavaFX usando la 18
         modules = [ 'javafx.graphics' ] // Especifica el modulo
         // configuration = 'compileOnly'
-    }
+    } */
 
     version = '1.0'
     ext {
@@ -41,8 +41,8 @@ allprojects {
         // roboVMVersion = '1.5.0'
         box2DLightsVersion = '1.3'
         aiVersion = '1.5.0'
-        artemisVersion = '0.11.4'
-        artemisContribVersion = '0.11.4'
+        artemisVersion = '2.3.0'
+        artemisContribVersion = '2.3.0'
     }
 
     repositories {
@@ -90,7 +90,7 @@ project(":core") {
         implementation "com.underwaterapps.overlap2druntime:overlap2d-runtime-libgdx:0.0.8"
 
         implementation "net.onedaybeard.artemis:artemis-odb:$artemisVersion"
-        provided "net.onedaybeard.artemis:artemis-odb-processor:$artemisVersion"
+        provided "net.onedaybeard.artemis:artemis-odb-processor:1.4.0"
         implementation "net.mostlyoriginal.artemis-odb:contrib-core:$artemisContribVersion"
         implementation "net.mostlyoriginal.artemis-odb:contrib-jam:$artemisContribVersion"
         implementation "net.mostlyoriginal.artemis-odb:contrib-eventbus:$artemisContribVersion"

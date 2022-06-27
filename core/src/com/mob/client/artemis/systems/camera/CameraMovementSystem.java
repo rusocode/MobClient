@@ -32,7 +32,9 @@ public class CameraMovementSystem extends EntityProcessingSystem
 
     @Override
     protected void process(Entity e) {
-        world.getManager(TagManager.class);
+
+        world.getEntityManager();
+        // world.getManager(TagManager.class);
 
         final Pos pos = pm.get(e);
         cameraSystem.camera.position.x = (pos.x);

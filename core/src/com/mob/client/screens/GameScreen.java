@@ -16,6 +16,7 @@
  *******************************************************************************/
 package com.mob.client.screens;
 
+import com.artemis.WorldConfigurationBuilder;
 import com.artemis.managers.GroupManager;
 import com.artemis.managers.TagManager;
 import com.artemis.managers.UuidEntityManager;
@@ -33,7 +34,7 @@ import com.mob.client.artemis.systems.physics.MovementSystem;
 import com.mob.client.artemis.systems.render.CharacterRenderingSystem;
 import com.mob.client.artemis.systems.render.MapRenderingSystem;
 
-import net.mostlyoriginal.api.utils.builder.WorldConfigurationBuilder;
+// import net.mostlyoriginal.api.utils.builder.WorldConfigurationBuilder;
 
 /**
  * Class GameScreen
